@@ -21,10 +21,12 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.devanshramen.loginapplication.R;
 import com.devanshramen.loginapplication.databinding.ActivityLoginBinding;
 import com.devanshramen.loginapplication.model.LoginRequest;
+import com.devanshramen.loginapplication.model.LoginResponse;
 
 import java.util.List;
 
@@ -36,18 +38,21 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel mViewModel;
 
+    LoginRequest loginRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         final ActivityLoginBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        binding.setLoginRequest(loginRequest);
 
         // Get the ViewModel.
         mViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
 
         // Create the observer which updates the UI.
-        final Observer<LoginRequest> nameObserver = new Observer<LoginRequest>() {
+        final Observer<LoginRequest> loginRequestObserver = new Observer<LoginRequest>() {
             @Override
             public void onChanged(@Nullable final LoginRequest loginRequest) {
                 // Update the UI, in this case, a TextView.
@@ -56,17 +61,39 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-        mViewModel.getLoginRequest().observe(this, nameObserver);
-        LoginRequest request = new LoginRequest("Test", "User");
-        binding.setLoginRequest(request);
+        mViewModel.getLoginRequest().observe(this, loginRequestObserver);
+
+        // Create the observer which updates the UI.
+        final Observer<LoginResponse> loginResponseObserver = new Observer<LoginResponse>() {
+            @Override
+            public void onChanged(@Nullable final LoginResponse loginResponse) {
+                // Update the UI, in this case, a TextView.
+                if (loginResponse.isSuccess()) {
+                    Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
+                    finish();
+
+                } else {
+                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
+        mViewModel.getLoginResponse().observe(this, loginResponseObserver);
 
 
         binding.btnLogin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                mViewModel.validateEmail();
+                if (mViewModel.isUsernameAndPasswordValid(binding.edtUsername.toString(), binding.edtPassword.toString())) {
+                    mViewModel.login(binding.edtUsername.toString(), binding.edtPassword.toString());
+
+                } else {
+                    Toast.makeText(LoginActivity.this, "Enter a valid Username and Password", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
+
 
     }
 }

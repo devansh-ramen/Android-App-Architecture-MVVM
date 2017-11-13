@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 
 import com.devanshramen.loginapplication.R;
 import com.devanshramen.loginapplication.model.LoginRequest;
+import com.devanshramen.loginapplication.model.LoginResponse;
 
 import java.util.List;
 
@@ -22,6 +23,8 @@ public class LoginViewModel extends ViewModel {
     // Create a LiveData
     private MutableLiveData<LoginRequest> loginRequest;
 
+    private MutableLiveData<LoginResponse> loginResponse;
+
     public MutableLiveData<LoginRequest> getLoginRequest() {
         if (loginRequest == null) {
             loginRequest = new MutableLiveData<LoginRequest>();
@@ -29,44 +32,23 @@ public class LoginViewModel extends ViewModel {
         return loginRequest;
     }
 
-    public void validateEmail() {
-        // Reset errors.
-       /* mEmailView.setError(null);
-        mPasswordView.setError(null);
+    public MutableLiveData<LoginResponse> getLoginResponse() {
+        if (loginResponse == null) {
+            loginResponse = new MutableLiveData<LoginResponse>();
+        }
+        return loginResponse;
+    }
 
-        // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
-
-        boolean cancel = false;
-        View focusView = null;
-
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
+    public boolean isUsernameAndPasswordValid(String username, String password) {
+        //validate email and password
+        if (username == null || username.isEmpty()) {
+            return false;
         }
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
+        if (password == null || password.isEmpty()) {
+            return false;
         }
-
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-        } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-        }*/
+        return true;
     }
 
     public boolean isEmailValid(String email) {
@@ -80,9 +62,14 @@ public class LoginViewModel extends ViewModel {
     }
 
 
+
+    public void login(String email, String password) {
+        new UserLoginTask(email, password).execute();
+    }
+
+
     /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
+     * For example, we are using AsyncTask
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
@@ -96,7 +83,6 @@ public class LoginViewModel extends ViewModel {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
 
             try {
                 // Simulate network access.
@@ -105,20 +91,16 @@ public class LoginViewModel extends ViewModel {
                 return false;
             }
 
-
-            // TODO: register the new account here.
             return true;
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
 
-           /* if (success) {
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }*/
+            LoginResponse response = new LoginResponse();
+            response.setSuccess(success);
+
+            getLoginResponse().postValue(response);
         }
 
         @Override
