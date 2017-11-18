@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.devanshramen.loginapplication.ui.LoginActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.devanshramen.loginapplication.ui.login.LoginActivity">
     <data>
-        <variable name="loginRequest" type="com.devanshramen.loginapplication.model.LoginRequest"/>
+        <variable name="viewModel" type="com.devanshramen.loginapplication.ui.login.LoginViewModel"/>
     </data>
 
     <LinearLayout
@@ -38,22 +39,24 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    app:error="@{viewModel.errorEmail}">
 
                     <EditText
-                        android:id="@+id/edt_username"
+                        android:id="@+id/edt_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/prompt_username"
-                        android:text="@{loginRequest.username}"
                         android:inputType="textEmailAddress"
+                        android:text="@={viewModel.email}"
                         android:maxLines="1"/>
 
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    app:error="@{viewModel.errorPassword}">
 
                     <EditText
                         android:id="@+id/edt_password"
@@ -63,7 +66,7 @@
                         android:imeActionId="@+id/login"
                         android:imeOptions="actionUnspecified"
                         android:inputType="textPassword"
-                        android:text="@{loginRequest.password}"
+                        android:text="@={viewModel.password}"
                         android:maxLines="1"/>
 
                 </android.support.design.widget.TextInputLayout>
@@ -75,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/action_sign_in"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
             </LinearLayout>
         </ScrollView>

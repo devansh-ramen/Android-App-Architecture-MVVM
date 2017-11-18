@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 26
@@ -21,6 +22,11 @@ android {
     dataBinding {
         enabled = true
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -28,13 +34,16 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
+
+
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:design:26.+'
+    compile 'android.arch.lifecycle:runtime:1.0.3'
+    compile 'android.arch.lifecycle:extensions:1.0.0'
+    compile 'android.arch.lifecycle:reactivestreams:1.0.0'
+    compile 'android.arch.core:core-testing:1.0.0'
+    compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-
-    compile "android.arch.lifecycle:runtime:1.0.3"
-
-    compile "android.arch.lifecycle:extensions:1.0.0"
-    compile "android.arch.lifecycle:reactivestreams:1.0.0"
-    compile "android.arch.core:core-testing:1.0.0"
 }
