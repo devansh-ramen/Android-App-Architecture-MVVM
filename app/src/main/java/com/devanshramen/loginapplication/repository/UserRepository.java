@@ -5,10 +5,6 @@ package com.devanshramen.loginapplication.repository;
  */
 
 public class UserRepository {
-    // todo inject APIService
-
-   /* public MutableLiveData<LoginResponse> login(LoginRequest request) {
-        return getAPIService().login(request);
-    }*/
+    // todo
 }
 

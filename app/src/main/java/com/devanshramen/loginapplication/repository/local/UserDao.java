@@ -13,7 +13,8 @@ import java.util.List;
  */
 
 public interface UserDao {
-
+    //todo
+    
     @Query("SELECT * FROM user")
     List<LoginResponse.User> getAll();
 
