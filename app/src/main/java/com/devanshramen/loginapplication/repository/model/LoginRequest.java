@@ -1,4 +1,4 @@
-package com.devanshramen.loginapplication.model;
+package com.devanshramen.loginapplication.repository.model;
 
 /**
  * Created by devanshramen on 12/11/2017.

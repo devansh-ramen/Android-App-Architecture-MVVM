@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.devanshramen.loginapplication.ui.login.LoginActivity">
+
     <data>
         <variable name="viewModel" type="com.devanshramen.loginapplication.ui.login.LoginViewModel"/>
     </data>

@@ -1,6 +1,7 @@
 package com.devanshramen.loginapplication.ui.login;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import com.devanshramen.loginapplication.R;
 import com.devanshramen.loginapplication.databinding.ActivityLoginBinding;
+import com.devanshramen.loginapplication.ui.main.MainActivity;
 
 /**
  * A login screen that offers login via email/password.
@@ -30,13 +32,15 @@ public class LoginActivity extends AppCompatActivity {
         mViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         binding.setViewModel(mViewModel);
 
-        // Create the observer which updates the UI.
 
-        //Login Response
+        // The observer updates the UI when Login Response is successful
         mViewModel.getLoginResponse().observe(this, loginResponse -> {
 
             if (loginResponse.isSuccess()) {
                 Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
                 finish();
 
             } else {
