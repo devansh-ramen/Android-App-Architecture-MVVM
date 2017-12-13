@@ -1,10 +1,11 @@
 package com.devanshramen.loginapplication.repository.local;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import com.devanshramen.loginapplication.repository.model.LoginResponse;
+import com.devanshramen.loginapplication.repository.model.LoginResponse.User;
 
 import java.util.List;
 
@@ -15,15 +16,12 @@ import java.util.List;
 public interface UserDao {
     //todo
     
-    @Query("SELECT * FROM user")
-    List<LoginResponse.User> getAll();
-
-    @Query("SELECT * FROM user WHERE id IN (:userIds)")
-    List<LoginResponse.User> loadAllByIds(int[] userIds);
+    @Query("SELECT * FROM user LIMIT 1")
+    LiveData<User> getUser();
 
     @Insert
-    void insertAll(LoginResponse.User... users);
+    void insert(User user);
 
     @Delete
-    void delete(LoginResponse.User user);
+    void delete(User user);
 }

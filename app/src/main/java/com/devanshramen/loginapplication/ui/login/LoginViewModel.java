@@ -39,20 +39,7 @@ public class LoginViewModel extends ViewModel {
 
         if (validateInputs()) {
 
-            // TO DO Get from UserRepository
-            getAPIService().login(new LoginRequest(email.get(), password.get()))
-                    .compose(RxUtils.applySchedulers())
-                    .subscribe(
-                            (LoginResponse response) -> {  // on Success
-                                loginResponse.setValue(response);
 
-                            },
-                            (Throwable e) -> { // on Fail
-                                e.printStackTrace();
-
-                            },
-                            () -> { // on Complete
-                            });
         }
     }
 
