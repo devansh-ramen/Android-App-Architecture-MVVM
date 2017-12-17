@@ -1,16 +1,13 @@
-package com.devanshramen.loginapplication.ui.login;
+package com.devanshramen.loginapplication.viewmodel;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.databinding.ObservableField;
 
-import com.devanshramen.loginapplication.repository.model.LoginRequest;
-import com.devanshramen.loginapplication.repository.model.LoginResponse;
+import com.devanshramen.loginapplication.db.UserRepository;
+import com.devanshramen.loginapplication.model.LoginResponse.User;
 import com.devanshramen.loginapplication.utils.EmailUtils;
-import com.devanshramen.loginapplication.utils.RxUtils;
-
-import static com.devanshramen.loginapplication.utils.NetworkUtils.getAPIService;
 
 /**
  * Created by devanshramen on 12/11/2017.
@@ -19,7 +16,7 @@ import static com.devanshramen.loginapplication.utils.NetworkUtils.getAPIService
 public class LoginViewModel extends ViewModel {
 
     // Create a LiveData
-    private MutableLiveData<LoginResponse> loginResponse;
+    private LiveData<User> userResponse;
 
     public final ObservableField<String> email = new ObservableField<>();
     public final ObservableField<String> password = new ObservableField<>();
@@ -27,19 +24,25 @@ public class LoginViewModel extends ViewModel {
     public final ObservableField<String> errorEmail = new ObservableField<>();
     public final ObservableField<String> errorPassword = new ObservableField<>();
 
-    public LiveData<LoginResponse> getLoginResponse() {
-        if (loginResponse == null) {
-            loginResponse = new MutableLiveData<LoginResponse>();
-        }
-        return loginResponse;
+    UserRepository userRepository;
+
+    public LoginViewModel() {
+        userRepository = new UserRepository();
+        email.set("devansh@gmail.com");
+        password.set("12345");
+
+        userResponse = userRepository.getUser();
+    }
+
+    public LiveData<User> getUser() {
+        return userResponse;
     }
 
 
     public void onBtnLoginClick() {
 
         if (validateInputs()) {
-
-
+            userRepository.loginUser(email.get(), password.get());
         }
     }
 

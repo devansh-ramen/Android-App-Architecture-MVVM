@@ -1,16 +1,18 @@
-package com.devanshramen.loginapplication.ui.login;
+package com.devanshramen.loginapplication.ui;
 
+import android.arch.lifecycle.LifecycleActivity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.devanshramen.loginapplication.R;
 import com.devanshramen.loginapplication.databinding.ActivityLoginBinding;
-import com.devanshramen.loginapplication.ui.main.MainActivity;
+import com.devanshramen.loginapplication.viewmodel.LoginViewModel;
 
 /**
  * A login screen that offers login via email/password.
@@ -34,17 +36,21 @@ public class LoginActivity extends AppCompatActivity {
 
 
         // The observer updates the UI when Login Response is successful
-        mViewModel.getLoginResponse().observe(this, loginResponse -> {
+        mViewModel.getUser().observe(this, userResponse -> {
 
-            if (loginResponse.isSuccess()) {
+            Log.d("LoginActivity", "value user was updated");
+
+            if (userResponse != null) {
+                Log.d("UserRepository", "login response: " + userResponse.getLastName());
                 Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
-                finish();
+                //finish();
 
             } else {
-                Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+
+                Log.d("LoginActivity", "value user is null");
             }
         });
 
@@ -55,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
 
             });
     }
+
 
 }
 

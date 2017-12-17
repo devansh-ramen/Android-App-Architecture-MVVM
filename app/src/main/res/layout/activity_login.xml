@@ -2,10 +2,10 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.devanshramen.loginapplication.ui.login.LoginActivity">
+    tools:context="com.devanshramen.loginapplication.ui.LoginActivity">
 
     <data>
-        <variable name="viewModel" type="com.devanshramen.loginapplication.ui.login.LoginViewModel"/>
+        <variable name="viewModel" type="com.devanshramen.loginapplication.viewmodel.LoginViewModel"/>
     </data>
 
     <LinearLayout

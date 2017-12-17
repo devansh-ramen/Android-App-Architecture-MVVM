@@ -1,11 +1,11 @@
-package com.devanshramen.loginapplication.repository.local;
+package com.devanshramen.loginapplication.db.local;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-import com.devanshramen.loginapplication.repository.model.LoginResponse;
+import com.devanshramen.loginapplication.model.LoginResponse;
 
 /**
  * Created by devanshramen on 13/12/2017.
@@ -24,7 +24,7 @@ public abstract class AppDatabase extends RoomDatabase {
                     Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "user-database")
                             // allow queries on the main thread.
                             // Don't do this on a real app! See PersistenceBasicSample for an example.
-                            .allowMainThreadQueries()
+                            //.allowMainThreadQueries()
                             .build();
         }
         return INSTANCE;

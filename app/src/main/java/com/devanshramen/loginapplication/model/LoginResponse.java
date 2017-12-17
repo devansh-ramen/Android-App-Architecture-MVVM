@@ -1,4 +1,4 @@
-package com.devanshramen.loginapplication.repository.model;
+package com.devanshramen.loginapplication.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
@@ -31,7 +31,7 @@ public class LoginResponse {
 
 
     @Entity
-    public class User {
+    public static class User {
 
         @PrimaryKey
         private Integer id;
