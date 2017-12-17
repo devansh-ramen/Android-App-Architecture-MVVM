@@ -14,8 +14,6 @@ import com.devanshramen.loginapplication.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
-    UserRepository userRepository;
-
     private MainViewModel mViewModel;
 
     @Override
@@ -26,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
-        // The observer updates the UI when Login Response is successful
+        // The observer updates the UI to display prefetched user details
         mViewModel.getUser().observe(this, userResponse -> {
 
             if (userResponse != null) {

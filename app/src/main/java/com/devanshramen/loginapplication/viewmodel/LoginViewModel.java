@@ -38,9 +38,7 @@ public class LoginViewModel extends ViewModel {
         return userResponse;
     }
 
-
     public void onBtnLoginClick() {
-
         if (validateInputs()) {
             userRepository.loginUser(email.get(), password.get());
         }

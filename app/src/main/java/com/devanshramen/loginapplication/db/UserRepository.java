@@ -24,10 +24,8 @@ public class UserRepository {
     UserDao userDao;
     Executor executor;
 
-
     public UserRepository() {
         this.userDao = AppDatabase.getAppDatabase(MApplication.context).userDao();
-
         executor = Executors.newSingleThreadExecutor();
     }
 
@@ -39,27 +37,19 @@ public class UserRepository {
 
     public void loginUser(String email, String password) {
 
-            getAPIService().login(new LoginRequest(email, password))
-                .compose(RxUtils.applySchedulers())
-                .subscribe(
-                    (LoginResponse response) -> {
-
-                        new Thread( () -> {
-                                userDao.delete(response.getUser());
-                                userDao.insert(response.getUser());
-                            }
-                        ).start();
-
-                        Log.d(this.getClass().toString(), "response" + response.getUser().getFirstName());
-                    },
-                    (Throwable e) -> {
-                        e.printStackTrace();
-                    }
-                );
-
-
+        getAPIService().login(new LoginRequest(email, password))
+            .compose(RxUtils.applySchedulers())
+            .subscribe(
+                (LoginResponse response) -> {
+                    executor.execute(() -> {
+                        userDao.insert(response.getUser());
+                    });
+                },
+                (Throwable e) -> {
+                    e.printStackTrace();
+                }
+            );
     }
-
 
     public LiveData<User> getUser() {
         return userDao.getUser();

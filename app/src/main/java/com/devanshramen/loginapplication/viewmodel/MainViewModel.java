@@ -16,7 +16,6 @@ public class MainViewModel extends ViewModel {
 
     public MainViewModel() {
         userRepository = new UserRepository();
-       // userRepository.clearUserCached();
     }
 
     public LiveData<User> getUser() {

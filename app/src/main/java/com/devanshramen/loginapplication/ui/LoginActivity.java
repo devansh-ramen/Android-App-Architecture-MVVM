@@ -35,22 +35,18 @@ public class LoginActivity extends AppCompatActivity {
         binding.setViewModel(mViewModel);
 
 
-        // The observer updates the UI when Login Response is successful
+        // The observer updates the UI when Login Operation is successful
         mViewModel.getUser().observe(this, userResponse -> {
-
-            Log.d("LoginActivity", "value user was updated");
-
             if (userResponse != null) {
-                Log.d("UserRepository", "login response: " + userResponse.getLastName());
                 Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
-                //finish();
+                finish();
 
             } else {
-
                 Log.d("LoginActivity", "value user is null");
+                // Show ERROR
             }
         });
 
