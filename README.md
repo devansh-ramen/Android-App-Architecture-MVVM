@@ -2,7 +2,7 @@
 
 This is a simple Login app which follows the Android Architectural Component guidelines (https://developer.android.com/topic/libraries/architecture/index.html) using MVVM pattern. 
 
-Our Login app will require two inputs: email & password, which will be validated locally, make an API call to send the request. The app include two-way Data Binding, use LiveData, ObservableFields, ViewModels and Repository Pattern.
+The user inputs two inputs: email & password, which will be validated locally, user data is fetched and cached using Repository Pattern. The app include two-way Data Binding on the Login Form with the use LiveData, ObservableField, ViewModel to create reactive UI.
 
 
 We have a blog post which explains in details the implementation:
