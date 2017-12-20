@@ -7,4 +7,5 @@ The user inputs two inputs: email & password, which will be validated locally, u
 
 We have a blog post which explains in details the implementation:
 Part 1: https://devanshramen.com/2017/11/19/mvvm-androids-architecture-components-part-1-viewmodel-livedata/
+
 Part 2: https://devanshramen.com/2017/12/17/mvvm-androids-architecture-components-part-2-repository-pattern/
